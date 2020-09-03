@@ -34,7 +34,7 @@ int solution(vector<vector<int> > board, vector<int> moves) {
 
 int main() {
 	vector< vector<int> >vec;
-	// 확인 해보기 위해서
+	// 예제를 확인 해보기 위해서
 	vector<int>a;
 	a.push_back(0);
 	a.push_back(0);
