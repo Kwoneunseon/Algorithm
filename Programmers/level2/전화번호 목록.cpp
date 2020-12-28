@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
@@ -22,5 +23,28 @@ bool solution(vector<string> phone_book) {
 		}
 	}
 
+	return answer;
+}
+
+
+//success code using hash
+
+bool solution(vector<string>phone_book) {
+	bool answer = true;
+	unordered_map <string, int> check;
+	for (auto number : phone_book) {
+		check[number] = 1;
+	}
+
+	for (auto s1 : phone_book) {
+		string temp = "";
+		for (int i = 0; i < s1.length(); i++)
+		{
+			temp += s1[i];
+			if (check[temp] && temp != s1) {
+				return false;
+			}
+		}
+	}
 	return answer;
 }
