@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-//구글링 함.
+//구글링을 이용함.
 //에라토스테네스의 체를 이용한다.
 
 bool check(int number, string s) {
