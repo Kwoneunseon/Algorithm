@@ -5,6 +5,8 @@ using namespace std;
 //구글링 함.
 //에라토스테네스의 체를 이용한다.
 
+
+//시간변경확인
 bool check(int number, string s) {
 	vector<bool>visited(s.size());
 
