@@ -29,11 +29,3 @@ string solution(vector<int> numbers) {
 	}
 	return answer;
 }
-
-int main() {
-	vector<int> numbers = { 6,10,2 };
-
-	cout << solution(numbers);
-
-	return 0;
-}
