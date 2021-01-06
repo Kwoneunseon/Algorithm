@@ -1,49 +1,22 @@
 #include <vector>
-#include <algorithm>
-#include <iostream>
+#include <queue>
+
 using namespace std;
 
-int cir(int first, int second, int&answer) {
-	answer++;
-	return first + 2 * second;
-}
-
-int solution(vector<int>scoville, int k) {
+int solution(vector<int> scovile, int K) {
 	int answer = 0;
-	vector<int> temp;
-	sort(scoville.begin(), scoville.end());
-	for (int i = 0; i < scoville.size(); i++)
-	{
-		temp.push_back(scoville[i]);
-		if (scoville[i] >= k) {
-			break;
-		}
+	priority_queue<int, vector<int>, greater<> >pq(scovile.begin(), scovile.end());
+	
+	while (pq.size() > 1 && pq.top() < K) {
+		int first = pq.top();
+		pq.pop();
+		int second = pq.top();
+		pq.pop();
+		pq.push(first + 2 * second);
+		answer++;
 	}
-
-
-	int check;
-	while(!temp.empty())
-	{
-		if (temp.size() == 1) {
-			temp.erase(temp.begin(), temp.begin() + 1);
-		}
-		else {
-			check = cir(temp[0], temp[1], answer);
-			temp.erase(temp.begin(), temp.begin() + 2);
-		}
-		if (check < k) {
-			temp.push_back(check);
-			sort(temp.begin(), temp.end());
-		}
+	if (pq.top() < K) {
+		return -1;
 	}
-
-
-
 	return answer;
-}
-
-int main() {
-	cout << solution({ 1,2,3,9,10,12 }, 7);
-
-	return 0;
 }
