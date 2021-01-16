@@ -42,3 +42,38 @@ int solution(string skill, vector<string> skill_trees) {
 	}
 	return answer;
 }
+
+//다른사람 풀이
+
+int solution(string skill,vector<string>skill_trees){
+	int answer = 0;
+	for (int i = 0; i < skill_trees.size() ;i++)
+	{
+		vector<char> compare;
+		for (int j = 0; j < skill_trees[i].size(); j++)
+		{
+			for (int k = 0; k < skill.size(); k++)
+			{
+				if (skill[k] == skill_trees[i][j]) {
+					char temp = skill[k];
+					compare.push_back(temp);
+				}
+			}
+		}
+		//먼저 배운 스킬을 순서대로 집어넣은 후
+		//나중에 skill에 있는 순서와 비교한다
+		bool flag = true;
+		for (int c = 0; c < compare.size(); c++)
+		{
+			if (skill[c] != compare[c]) {
+				flag = false;
+				break;
+			}
+
+		}
+		if (flag)
+			answer++;
+	}
+
+	return answer;
+}
