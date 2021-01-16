@@ -33,3 +33,26 @@ vector<int> solution(vector<int>progresses, vector<int> speeds) {
 
 	return answer;
 }
+
+//다른사람 코드
+vector<int> solution_1(vector<int>progress, vector<int> speeds) {
+	vector<int> answer;
+
+	int day, max_day = 0;
+	for (int i = 0; i < progress.size(); i++)
+	{
+		day = (99 - progress[i]) / speeds[i] + 1;
+
+		if (answer.empty() || max_day < day) {
+			answer.push_back(1);
+		}
+		else {
+			++answer.back();
+		}
+
+		if (max_day < day) {
+			max_day = day;
+		}
+	}
+	return answer;
+}
