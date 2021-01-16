@@ -1,6 +1,5 @@
 #include <vector>
 #include <string>
-#include <iostream>
 using namespace std;
 
 string numbers = { '1','2','4' };
@@ -49,10 +48,20 @@ string solution(int n) {
 }
 
 
-int main() {
-	string answer;
-	answer = solution(90);
-	cout << answer;
+//다른 사람 풀이
 
-	return 0;
+string numbers = { '4','1','2'};
+
+string other_solution(int n) {
+	string answer ="";
+	int a;
+	while (n > 0) {
+		a = n % 3;
+		n = n / 3;
+		if (a == 0) {
+			n -= 1;
+		}
+		answer = numbers[a] + answer;
+	}
+	return answer;
 }
