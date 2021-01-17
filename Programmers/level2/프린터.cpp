@@ -37,3 +37,37 @@ int solution(vector<int> priorities, int location) {
 	return answer;
 
 }
+
+
+//다른 사람 클린 코드
+int solution1(vector<int> priorities, int location) {
+	int answer = 0;
+	vector<int> sorted;
+	queue<int>prior;
+	for (int i = 0; i <priorities.size(); i++)
+	{
+		prior.push(i);
+	}
+	int idx;
+	while (!prior.empty()) {
+		idx = prior.front();
+		prior.pop();
+		if (priorities[idx] == *max_element(priorities.begin(), priorities.end())) {
+			priorities[idx] = 0;
+			sorted.push_back(idx);
+		}
+		else {
+			prior.push(idx);
+		}
+	}
+
+	for (int i = 0; i < sorted.size(); i++)
+	{
+		if (sorted[i] == location){
+			answer = i + 1;
+			break;
+		}
+	}
+
+	return answer;
+}
