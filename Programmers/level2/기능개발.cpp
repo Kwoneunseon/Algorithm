@@ -1,4 +1,4 @@
-#include <vector>
+﻿#include <vector>
 using namespace std;
 
 vector<int> solution(vector<int>progresses, vector<int> speeds) {
@@ -34,13 +34,14 @@ vector<int> solution(vector<int>progresses, vector<int> speeds) {
 	return answer;
 }
 
-//�ٸ���� �ڵ�
+//다른사람 코드
 vector<int> solution_1(vector<int>progress, vector<int> speeds) {
 	vector<int> answer;
 
 	int day, max_day = 0;
 	for (int i = 0; i < progress.size(); i++)
 	{
+		//나머지가 있을 경우 +1을 해주는 간단한 식
 		day = (99 - progress[i]) / speeds[i] + 1;
 
 		if (answer.empty() || max_day < day) {
