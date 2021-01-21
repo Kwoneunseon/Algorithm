@@ -1,15 +1,15 @@
-using namespace std;
+ï»¿using namespace std;
 
 // w * h - (w + h - gcd)
 
-int gcd(int a, int b) {
+int gcd(long a,long b) {
 	int value = 1;
 	if (a < b) {
 		int temp = b;
 		b = a;
 		a = temp;
 	}
-	//Ç×»ó a°¡ Å­
+	//í•­ìƒ aê°€ í¼
 	for (int i = 1; i <= b; i++)
 	{
 		if (a % i == 0 && b %i == 0)
@@ -19,15 +19,15 @@ int gcd(int a, int b) {
 	return value;
 
 }
-long long soulution(int w, int h){
+long long solution(long w, long h){
 	long long answer = 1;
 
-	answer = w * h - (w + h - gcd(w, h));
+	answer = (long long)w * (long long)h - (w + h - gcd(w, h));
 
 	return answer;
 }
 
-//gcd±¸ÇÏ´Â ´Ù¸¥ ¹æ¹ýµé
+//gcdêµ¬í•˜ëŠ” ë‹¤ë¥¸ ë°©ë²•ë“¤
 int gcd_1(int w, int h) {
 	int gcd = 1;
 	for (int i = (w<h?w:h); i >= 0; i--)
