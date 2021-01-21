@@ -1,4 +1,4 @@
-#include <vector>	
+﻿#include <vector>	
 #include <algorithm>
 #include <queue>
 
@@ -39,11 +39,12 @@ int solution(vector<int> priorities, int location) {
 }
 
 
-//�ٸ� ��� Ŭ�� �ڵ�
+//다른 사람 클린 코드
 int solution1(vector<int> priorities, int location) {
 	int answer = 0;
 	vector<int> sorted;
 	queue<int>prior;
+	//queue에 인덱스를 표시하기 위한 value를 집어넣는다.
 	for (int i = 0; i <priorities.size(); i++)
 	{
 		prior.push(i);
@@ -51,7 +52,7 @@ int solution1(vector<int> priorities, int location) {
 	int idx;
 	while (!prior.empty()) {
 		idx = prior.front();
-		prior.pop();
+		prior.pop();	
 		if (priorities[idx] == *max_element(priorities.begin(), priorities.end())) {
 			priorities[idx] = 0;
 			sorted.push_back(idx);
@@ -61,6 +62,7 @@ int solution1(vector<int> priorities, int location) {
 		}
 	}
 
+	//인덱스를 저장하고 그걸 이용함.
 	for (int i = 0; i < sorted.size(); i++)
 	{
 		if (sorted[i] == location){
