@@ -3,25 +3,23 @@
 #include <algorithm>
 
 using namespace std;
-
-//효율성 문제 2개 틀림..
+//단순하게 생각해.
 int solution(vector<int> people, int limit) {
-	int answer = people.size();
-	sort(people.begin(), people.end());
-	int cnt= 0;
-	int idx = people.size();
-	for (int i = 0; i < idx; i++)
-	{
-		for (int j = idx-1; j >i; j--)
-		{
-			if (people[i] + people[j] <= limit) {
-				idx = j;
-				cnt++;
-				break;
-			}
+	int answer = 0;
+	sort(people.rbegin(), people.rend());
+	int first = 0 , second = people.size()-1;
+	while (first <= second) {
+		if (people[first] + people[second] <= limit) {
+			first++;
+			second--;
 		}
+		else {
+			first++;
+		}
+		answer++;
 	}
-	answer = answer - cnt;
+
+
 	return answer;
 }
 
