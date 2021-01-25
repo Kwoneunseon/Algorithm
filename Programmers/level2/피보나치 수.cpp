@@ -11,12 +11,8 @@ int solution(int n) {
 	fibonacci.push_back(1);
 	while (fibonacci.size() <= n) {
 		int idx = fibonacci.size() - 1;
-		fibonacci.push_back(fibonacci[idx] + fibonacci[idx - 1]);
+		fibonacci.push_back((fibonacci[idx] + fibonacci[idx - 1]) % 1234567);
 	}
-	answer = fibonacci[n - 1];
+	answer = fibonacci[n];
 	return answer;
-}
-int main() {
-	solution(5);
-	return 0;
 }
