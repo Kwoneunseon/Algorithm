@@ -1,49 +1,49 @@
-//BFS�̿�
+﻿//7576
+//bfs 이용함.
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-vector<vector<int > >network;
-vector<bool>visit;
-int num, connect;
-int cnt = 0;
+vector<int> net[101];
+bool visit[101] = { false, };
+int infection = -1;
 
 void bfs(int start) {
-	queue<int> q;
+	queue<int>q;
 	q.push(start);
 	visit[start] = true;
+
 	while (!q.empty()) {
-		int  pNode = q.front();
+		int temp = q.front();
 		q.pop();
-		for (int i = 0; i < network[pNode].size(); i++)
+		infection++;
+		visit[temp] = true;
+		for (int i = 0; i < net[temp].size(); i++)
 		{
-			int cNode = network[pNode][i];
-			if (!visit[cNode]) {
-				q.push(cNode);
-				visit[cNode] = true;
-				cnt++;
+			if (visit[net[temp][i]] == false) {
+				q.push(net[temp][i]);
+				visit[net[temp][i]] = true;
 			}
 		}
 	}
 }
 
 int main() {
-	cin >> num >> connect;
-	network.resize(num + 1);
-	visit.resize(num + 1);
-
-	for (int i = 0; i < connect; i++)
+	int computers,net_cnt;
+	cin >> computers >> net_cnt;
+	int a, b;
+	for (int i = 0; i < net_cnt; i++)
 	{
-		int parent, child;
-		cin >> parent >> child;
-		network[parent].push_back(child);
-		network[child].push_back(parent);
+		cin >> a >> b;
+		net[a].push_back(b);
+		net[b].push_back(a);
 	}
-	fill(visit.begin(), visit.end(), false);
 
 	bfs(1);
-	cout << cnt;
+	cout << infection;
+
+
 	return 0;
 }
