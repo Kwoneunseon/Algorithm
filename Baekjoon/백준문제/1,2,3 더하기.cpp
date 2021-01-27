@@ -1,5 +1,6 @@
-//9095
-//dp �̿�
+﻿//9095
+//dp 이용
+//솔루션 보고 해결.
 #include <iostream>
 using namespace std;
 
