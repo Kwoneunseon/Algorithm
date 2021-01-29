@@ -1,5 +1,9 @@
 //11053
 //dp사용
+/*
+	dp[i] = max(dp[j]+1,dp[i]);
+	이부분 잘 기억해.
+*/
 
 #include <iostream>
 #include <algorithm>
