@@ -10,10 +10,10 @@ int main() {
 	int Testcase;
 	cin >> Testcase;
 	while (Testcase--) {
-		int n, t_height,min_dif=0, dif;
+		int n, t_height,max_dif=0;
 		vector<int>trees;
 		cin >> n;
-		int *sorted = new int[n];
+		int *sorted = new int[n+1];
 		for (int i = 0; i < n; i++)
 		{
 			cin >> t_height;
@@ -28,18 +28,12 @@ int main() {
 			else
 				sorted[last--] = trees[i];
 		}
-		for (int i = 1; i < n; i++)
+		sorted[n] = sorted[0];
+		for (int i = 0; i < n; i++)
 		{
-			if (i == n - 1)
-				dif =abs( sorted[n - 1] - sorted[0]);
-			else {
-				dif = abs(sorted[i] - sorted[i + 1]);
-			}
-			if (min_dif < dif) {
-				min_dif = dif;
-			}
+			max_dif = max(max_dif, abs(sorted[i] - sorted[i + 1]));
 		}
-		cout << min_dif<<"\n";
+		cout << max_dif<<"\n";
 	}
 
 	return 0;
