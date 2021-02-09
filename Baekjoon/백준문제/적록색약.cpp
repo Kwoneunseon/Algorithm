@@ -18,7 +18,6 @@ void bfs(int a, int b,bool flag) {
 	char color = rgb[a][b];
 	queue<pair<int, int> >q;
 	q.push(make_pair(a, b));
-
 	while (!q.empty()) {
 		x= q.front().first;
 		y = q.front().second;
@@ -30,14 +29,22 @@ void bfs(int a, int b,bool flag) {
 			next_y = y + dy[i];
 			if (next_x < row && next_y < row&&next_x >= 0 && next_y >= 0 && !visit[next_x][next_y]) {
 				if (flag) {
-					if (color == 'R' && rgb[next_x][next_y]=='G') {
+					if (color == 'R' || color == 'G') {
+						if (rgb[next_x][next_y] == 'R' || rgb[next_x][next_y] == 'G') {
+							q.push(make_pair(next_x, next_y));
+							visit[next_x][next_y] = true;
+						}
+					}
+					else if(rgb[next_x][next_y]==color) {
+
 						q.push(make_pair(next_x, next_y));
+						visit[next_x][next_y] = true;
 					}
 				}
-				if (rgb[next_x][next_y] == color) {
+				else if (rgb[next_x][next_y] == color) {
 					q.push(make_pair(next_x, next_y));
+					visit[next_x][next_y] = true;
 				}
-				visit[next_x][next_y] = true;
 			}
 		}
 		
@@ -55,29 +62,25 @@ int main() {
 			rgb[i][j] = color;
 		}
 	}
-	int person=0,flag=false;//적록색약인 사람=true;
+	int cnt=0,flag=false;//적록색약인 사람=true;
 	char c[] = { 'R','G','B' };
 	for (int time = 0; time < 2; time++)
 	{
-		person = 0;
-		for (int colors = 0; colors < 3; colors++)
+		int cnt = 0;
+		memset(visit, false, sizeof(visit));
+
+		for (int i = 0; i< row; i++)
 		{
-			if (flag != true && colors != 1) {
-				memset(visit, false, sizeof(visit));
-			}
-			for (int i = 0; i < row; i++)
+			for (int j = 0; j < row; j++)
 			{
-				for (int j = 0; j < row; j++)
-				{
-					if (!visit[i][j]&& rgb[i][j]==c[colors]) {
-						bfs(i, j, flag);
-						person++;
-					}
+				if (visit[i][j] != true) {
+					bfs(i, j,flag);
+					cnt++;
 				}
 			}
 		}
 		flag = true;
-		cout << person;
+		cout << cnt <<" ";
 	}
 
 	return 0;
