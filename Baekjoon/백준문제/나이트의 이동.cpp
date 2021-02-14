@@ -17,7 +17,7 @@ int my[] = {1,2,-1,-2,2,1,-2,-1};
 int bfs(int sx, int sy, int dx, int dy,int len) {
 	queue<pair<pair<int, int> ,int> >q;//x,y와 cnt
 	int x, y, next_x, next_y,cnt;
-	q.push(make_pair(make_pair(sx, sy),0));
+	q.push(make_pair(make_pair(sx, sy),-1));//첫번째 위치 제외
 	visit[sx][sy] = true;
 	while (!q.empty()) {
 		x = q.front().first.first;
