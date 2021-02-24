@@ -1,16 +1,20 @@
+//2021.02.04 - 복습
+
 #include <vector>
-#include <iostream>
 #include <algorithm>
-#include <set>
+
 using namespace std;
 
-vector<int> solution(vector<int>numbers) {
-	vector<int>answer;
+vector<int> solution(vector<int> numbers){
+	vector<int> answer;
+	int check[201] = { 0, };
+
 	for (int i = 0; i < numbers.size(); i++)
 	{
 		for (int j = i+1; j < numbers.size(); j++)
 		{
-			if (find(answer.begin(), answer.end(), numbers[i] + numbers[j]) == answer.end()) {
+			if (check[numbers[i] + numbers[j]] == 0) {
+				check[numbers[i] + numbers[j]] = 1;
 				answer.push_back(numbers[i] + numbers[j]);
 			}
 		}
@@ -20,28 +24,6 @@ vector<int> solution(vector<int>numbers) {
 }
 
 int main() {
-	vector<int> ans;
-	ans = find_solution({ 2,1,3,1,4 });
-	for (int i = 0; i < ans.size(); i++)
-	{
-		cout << ans[i] << endl;
-	}
+	solution({ 5,0,2,7 });
 	return 0;
 }
-
-vector<int> find_solution(vector<int>numbers) {
-	vector<int> answer;
-	set<int>st;
-	for (int i = 0; i < numbers.size(); i++)
-	{
-		for (int j =i+1; j < numbers.size(); j++)
-		{
-			st.insert(numbers[i] + numbers[j]);
-		}
-	}
-	answer.assign(st.begin(), st.end());
-
-	return answer;
-}
-//set은 insert하면 자동 정렬된다.
-//set은 모든 원소가 유일하다.
