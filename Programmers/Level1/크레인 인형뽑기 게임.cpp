@@ -6,7 +6,7 @@ using namespace std;
 int solution(vector<vector<int>> board, vector<int>moves) {
 	int answer = 0;
 	stack<int> s[31];
-	for (int i = 4; i >= 0 ; i--)
+	for (int i = board.size()-1; i >= 0 ; i--)
 	{
 		for (int j = 1; j <= board.size(); j++)
 		{

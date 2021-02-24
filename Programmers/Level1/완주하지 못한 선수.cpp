@@ -15,7 +15,8 @@ string solution(vector<string>participant, vector<string> completion) {
 			break;
 		}
 	}
-	answer = participant[participant.size() - 1];
+	if(answer=="")
+		answer = participant[participant.size() - 1];
 	return answer;
 }
 
