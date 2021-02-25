@@ -1,59 +1,50 @@
-﻿#include <vector>
+﻿//복습 - 2021.02.25
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#include <string>
+
 using namespace std;
 
-vector<int> solution(vector<int>progresses, vector<int> speeds) {
-	vector<int>answer; 
-	vector<int>check;
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+	vector<int> answer;
+
 	for (int i = 0; i < progresses.size(); i++)
 	{
-		int remain = (100 - progresses[i]) % speeds[i];
-		if (remain == 0) {
-			check.push_back((100 - progresses[i]) / speeds[i]);
-		}
-		else {
-			check.push_back((100 - progresses[i]) / speeds[i] + 1);
-		}
+		if ((100 - progresses[i]) % speeds[i] == 0)
+			progresses[i] = (100 - progresses[i]) / speeds[i];
+		else
+			progresses[i] = (100 - progresses[i]) / speeds[i] + 1;
 	}
-	int sum = 1;
-	int min = check[0];
-	for (int i = 1; i < check.size(); i++)
-	{
-		if (min >= check[i]) {
-			sum++;
+	int *check = new int[progresses.size()];
+	memset(check, 0, sizeof(int)*progresses.size());
+	int i = 0,cnt=0;
+	while(i!=progresses.size()){
+		if (check[i] != 0) {
+			i++;
+			continue;
 		}
-		else {
-			answer.push_back(sum);
-			sum = 1, min = check[i];
+		int max_day = progresses[i];
+		for (int j = i; j < progresses.size(); j++)
+		{
+			if (check[j]==0&&max_day >= progresses[j]) {
+				check[j] = 1;
+				cnt++;
+			}
+			else {
+				break;
+			}
 		}
-		if (i == check.size() - 1) {
-			answer.push_back(sum);
-		}
-	}
+		answer.push_back(cnt);
+		cnt = 0;
+		i++;
 
+
+	}
 
 	return answer;
 }
-
-//다른사람 코드
-vector<int> solution_1(vector<int>progress, vector<int> speeds) {
-	vector<int> answer;
-
-	int day, max_day = 0;
-	for (int i = 0; i < progress.size(); i++)
-	{
-		//나머지가 있을 경우 +1을 해주는 간단한 식
-		day = (99 - progress[i]) / speeds[i] + 1;
-
-		if (answer.empty() || max_day < day) {
-			answer.push_back(1);
-		}
-		else {
-			++answer.back();
-		}
-
-		if (max_day < day) {
-			max_day = day;
-		}
-	}
-	return answer;
+int main() {
+	solution({ 95,90,99,99,80,99 }, { 1,1,1,1,1,1 });
+	return 0;
 }
