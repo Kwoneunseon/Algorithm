@@ -1,25 +1,31 @@
+//복습 - 2021.02.27
+
 #include <vector>
 #include <cmath>
-#include <iostream>
 
 using namespace std;
 
-vector<int> solution(int brown, int yellow) {
-	vector<int>answer;
-	int x, total;
+vector<int>solution(int brown, int yellow) {
+	vector<int> answer;
+
 	for (int i = 1; i <= sqrt(yellow); i++)
 	{
-		if (yellow % i == 0) {
+		int x, y;//x:가로 ,y:세로
+		if (yellow%i == 0) {
 			x = yellow / i;
-			total = (x + 2)* (i + 2);
-			if (brown == total - yellow) {
-				answer.push_back(x + 2); 
-				answer.push_back(i + 2);
+			y = i;
+			if (brown == ((x + 2)*(y + 2) - yellow)) {
+				answer.push_back(x + 2);
+				answer.push_back(y + 2);
 				break;
 			}
 		}
-
 	}
 
 	return answer;
+}
+
+int main() {
+	solution(24, 24);
+	return 0;
 }
