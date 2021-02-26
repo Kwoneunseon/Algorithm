@@ -1,67 +1,41 @@
+//2021.02.26-복습
 #include <vector>
 #include <string>
-using namespace std;
 
-string numbers = { '1','2','4' };
+using namespace std;
 
 string solution(int n) {
 	string answer = "";
-	vector<int> idx;
-	idx.push_back(n);
-	while (true) {
-		vector<int> temp;
-		bool flag = true;
-		for (int j = 0; j < idx.size(); j++)
+	string str = "0124";
+	vector<int> v;
+	while (n != 0) {
+		v.push_back(n % 3);
+		n /= 3;
+	}
+	bool check = true;
+	while (check) {
+		check = false;
+		for (int i = v.size()-1; i >= 0; i--)
 		{
-			if (idx[j] > 3) {
-				if (idx[j] % 3 == 0) {
-					temp.push_back(3);
-					temp.push_back(idx[j] / 3 - 1);
-				}
-				else {
-					temp.push_back(idx[j] % 3);
-					temp.push_back(idx[j] / 3);
-				}
+			if (v[i] == 0 && i<v.size()-1) {
+				check = true;
+				v[i] = 3;
+				v[i + 1] = v[i + 1] - 1;
 			}
-			else {
-				temp.push_back(idx[j]);
-			}
-		}
-		idx = temp;
-		for (int i = 0; i < temp.size(); i++)
-		{
-			if (temp[i] > 3) {
-				flag = false;
-				break;
-			}
-		}
-		if (flag) {
-			break;
 		}
 	}
-	
-	for (int i = idx.size()-1; i >=0; i--)
+
+	for (int i = v.size()-1; i >=0; i--)
 	{
-		answer.push_back(numbers[idx[i]-1]);
+		if (v[i] != 0) {
+			answer.push_back(str[v[i]]);
+		}
 	}
+
 	return answer;
 }
 
-
-//다른 사람 풀이
-
-string numbers = { '4','1','2'};
-
-string other_solution(int n) {
-	string answer ="";
-	int a;
-	while (n > 0) {
-		a = n % 3;
-		n = n / 3;
-		if (a == 0) {
-			n -= 1;
-		}
-		answer = numbers[a] + answer;
-	}
-	return answer;
+int main() {
+	solution(12);
+	return 0;
 }
