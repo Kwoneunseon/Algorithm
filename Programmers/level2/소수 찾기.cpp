@@ -17,6 +17,7 @@ bool check(int number, string s) {
 			if (temp == (s[i]-'0') && !visited[i]) {
 				flag = true;
 				visited[i] = true;
+				break;
 			}
 		}
 		if (!flag)return false;
