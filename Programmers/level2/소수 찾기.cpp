@@ -1,45 +1,50 @@
-#include <string>
+//복습 - 2021.02.27
 #include <vector>
+#include <string>
 #include <algorithm>
+
 using namespace std;
-//구글링을 이용함.
-//에라토스테네스의 체를 이용한다.
 
+//소수 숫자들이  string안에 있는지 확인
 bool check(int number, string s) {
-	vector<bool>visited(s.size());
+	vector<bool>visited(s.size(), false);
 
-	while (number) {
-		bool flag = false;//temp가 s안에 포함되는지 아닌지 확인을 위해서
+	while (number != 0) {
+		bool flag = false;
 		int temp = number % 10;
 		for (int i = 0; i < s.size(); i++)
 		{
-			if (temp == (s[i] - '0') && visited[i] == false) {
-				visited[i] = true;
+			if (temp == (s[i]-'0') && !visited[i]) {
 				flag = true;
-				break;
+				visited[i] = true;
 			}
 		}
-		if (flag == false) {
-			return false;
-		}
-
+		if (!flag)return false;
 		number /= 10;
 	}
 	return true;
 }
+
 int solution(string numbers) {
 	int answer = 0;
 	sort(numbers.begin(), numbers.end(), greater<int>());
-	vector<bool>arr(stoi(numbers)+1, false); // 에라토스테네스의 체 이용
-	for (int i = 2; i <= stoi(numbers); i++)
+	vector<bool>v(stoi(numbers) + 1, false);
+	for (int i =2; i <= stoi(numbers); i++)
 	{
-		if (!arr[i] && check(i, numbers)) answer++;
-		if (!arr[i]) {
-			for (int j= i*2; j <= stoi(numbers); j +=i)
+		if (!v[i] && check(i, numbers))answer++;
+		if (!v[i]) {
+			for (int j = i*2; j <= stoi(numbers); j+=i)
 			{
-				arr[j] = true;
+				v[j] = true;
 			}
 		}
 	}
+
+
 	return answer;
+}
+
+int main() {
+	solution("011");
+	return 0;
 }
