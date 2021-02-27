@@ -1,38 +1,43 @@
 //dfs사용
-#include <string>
+//복습 - 2021.02.27
+
 #include <vector>
+#include <string>
 #include <queue>
+#include <algorithm>
+
 using namespace std;
 
+string c_begin, c_target;
+vector<string>c_words;
+vector<int>v;
 int answer = 0;
 
-void dfs(string begin, string target, vector<string>words,bool* visit, int cnt = 0) {
-
+void dfs(string begin, string target,vector<string>words, bool visited[], int count = 0) {
 	for (int i = 0; i < words.size(); i++)
 	{
 		int diff = 0;
-		for (int j = 0; j < words[i].size(); j++)
+		for (int j = 0; j < words[i].length(); j++)
 		{
-			if (!visit[i] && begin[j] != words[i][j])diff++;
+			if (!visited[i] && begin[j] != words[i][j])diff++;
 		}
 		if (diff == 1) {
 			if (words[i] == target) {
-				answer = cnt + 1;
+				answer = count +1;
 				break;
 			}
-			visit[i] = true;
-			dfs(words[i], target, words, visit, cnt + 1);
-			visit[i] = false;
+			visited[i] = true;
+			dfs(words[i], target, words, visited, count + 1);
+			visited[i] = false;
 		}
 	}
-
-
 }
 
-int solution(string begin, string target, vector<string> words) {
-	bool visit[51] = { false, };
-	dfs(begin, target, words, visit);
-	if (answer == 100) return 0;
+int solution(string begin, string target, vector<string>words) {
+	bool visited[51] = { false, };
+	dfs(begin, target, words, visited);
+	if (answer == 100)
+		return 0;
 	return answer;
 }
 
