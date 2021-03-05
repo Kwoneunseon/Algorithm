@@ -3,30 +3,44 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
+//중복되는 곳은 피해야한다.
+bool visit[100001] = { false, };
+
+bool valid(int n) {
+	if (n < 0 || n>100000 || visit[n])
+		return false;
+	return true;
+}
 
 int main() {
-	vector<int>answer;
-	answer.push_back(100000);
+	int answer = 0;
 	int o_loc, y_loc;
 	cin >> o_loc>>y_loc;
 	queue<pair<int, int>>q;
 	q.push(make_pair(o_loc, 0));
+	visit[o_loc] = true;
 	while (!q.empty()) {
 		int x = q.front().first;
 		int cnt = q.front().second;
 		q.pop();
 		if ((y_loc == x - 1) || (y_loc == x + 1) || (y_loc == 2 * x)) {
-			answer.push_back(cnt + 1);
-			continue;
+			answer = cnt + 1;
+			break;
 		}
-		if(x-1<10000 && cnt < *min_element(answer.begin(),answer.end()))
-			q.push(make_pair(x - 1,cnt+1));
-		if (x +1 < 10000 && cnt < *min_element(answer.begin(), answer.end()))
-			q.push(make_pair(x + 1,cnt+1));
-		if (x *2 < 10000 && cnt < *min_element(answer.begin(), answer.end()))
-			q.push(make_pair(2 * x,cnt+1));
+		if (valid(x + 1)) {
+			visit[x + 1] = true;
+			q.push({ x + 1,cnt + 1 });
+		}
+		if (valid(x - 1)) {
+			visit[x - 1] = true;
+			q.push({ x - 1,cnt + 1 });
+		}
+		if (valid(x * 2)) {
+			visit[2 * x] = true;
+			q.push({ x * 2,cnt + 1 });
+		}		
 	}
-	cout << *min_element(answer.begin(),answer.end());
+	cout << answer;
 
 	return 0;
 }
