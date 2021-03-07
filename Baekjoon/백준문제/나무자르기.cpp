@@ -1,39 +1,37 @@
 //2805번
+//솔루션 보고 해결
 
 #include <iostream>
-#include <vector>
 #include <algorithm>
-
 using namespace std;
+long long p[1000001];
+long long N, M, res;
+
+void bisect(long long lo, long long hi) {
+	if (lo > hi) return;
+	long long mid = (lo + hi) / 2;
+	long long sum = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (p[i] > mid)
+			sum += (p[i] - mid);
+	}
+	if (sum >= M) {
+		if (res < mid) res = mid;
+		bisect(mid + 1, hi);
+	}
+	else bisect(lo, mid - 1);
+}
 
 int main() {
-	vector<int>trees;
-	int size, height;
-	cin >> size >> height;
-	for (int i = 0; i < size; i++)
+	cin >> N >> M;
+	for (int i = 0; i < N; i++)
 	{
-		int temp;
-		cin >> temp;
-		trees.push_back(temp);
+		cin >> p[i];
 	}
-
-	sort(trees.begin(), trees.end());
-	int answer = size - 2, sum = 0, diff;
-	for (int i = size - 2; i >= 0; i--)
-	{
-		answer = trees[i];
-		diff = (trees[i + 1] - trees[i])*(size - i - 1);
-		if (sum + diff == height) {
-			break;
-		}
-		else if (sum +diff > height) {
-			answer += (height - sum);
-			break;
-		}
-		sum += diff;
-	}
-	cout << answer;
-
-
+	sort(p, p + N);
+	bisect(0, p[N - 1]);
+	cout << res;
 	return 0;
+
 }
