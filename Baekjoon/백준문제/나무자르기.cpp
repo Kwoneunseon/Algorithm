@@ -1,37 +1,43 @@
 //2805번
-//솔루션 보고 해결
+//다시 풀어 보기
 
 #include <iostream>
 #include <algorithm>
-using namespace std;
-long long p[1000001];
-long long N, M, res;
+#include <vector>
 
-void bisect(long long lo, long long hi) {
-	if (lo > hi) return;
-	long long mid = (lo + hi) / 2;
+using namespace std;
+vector<long long>trees;
+long long N, M, answer=0;
+
+void bisearch(long long start, long long end) {
+	if (start > end) return ;
 	long long sum = 0;
+	long long mid = (start + end) / 2;
 	for (int i = 0; i < N; i++)
 	{
-		if (p[i] > mid)
-			sum += (p[i] - mid);
+		if (trees[i] > mid) {
+			sum += (trees[i] - mid);
+		}
 	}
+
 	if (sum >= M) {
-		if (res < mid) res = mid;
-		bisect(mid + 1, hi);
+		if (answer < mid) answer = mid;
+		bisearch(mid + 1, end);
 	}
-	else bisect(lo, mid - 1);
+	else
+		bisearch(start, mid - 1);
 }
 
 int main() {
+	long long temp;
 	cin >> N >> M;
 	for (int i = 0; i < N; i++)
 	{
-		cin >> p[i];
+		cin >> temp;
+		trees.push_back(temp);
 	}
-	sort(p, p + N);
-	bisect(0, p[N - 1]);
-	cout << res;
+	sort(trees.begin(), trees.end());
+	bisearch(0, trees[N - 1]);
+	cout << answer;
 	return 0;
-
 }
