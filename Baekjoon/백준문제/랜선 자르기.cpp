@@ -12,7 +12,7 @@ long long N,answer=0;
 long long list[10001] = { 0, };
 
 long long bicheck(long long start, long long end) {
-	while (left <= right) {
+	while (start <= end) {
 		long long cnt = 0;
 		long long middle = (start + end) / 2;
 		for (int i = 0; i <= K; i++)
