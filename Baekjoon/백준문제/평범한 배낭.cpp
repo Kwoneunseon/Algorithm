@@ -1,36 +1,36 @@
 //12865
 //dp - knapsack
+//º¹½À - 2021.03.13
+//2021.03.13
+//12865
 #include <iostream>
+#include <cstring>
 #include <algorithm>
-#include <vector>
 
 using namespace std;
 
 int main() {
-	int bags, max_weight,weight,value;
-	int dp[102][100000] = { 0, };
-	cin >> bags >> max_weight;
-	pair<int, int>*item = new  pair<int,int>[bags];
-	for (int i = 1; i <= bags; i++)
+	int n, k;
+	int items[101][2];
+	int dp[101][100001] = { 0, };
+	cin >> n >> k;
+	for (int i = 0; i < n; i++)
 	{
-		cin >> weight >> value;
-		item[i] = make_pair(weight, value);
+		cin >> items[i][0] >> items[i][1];
 	}
 
-	for (int i = 1; i <= bags; i++)
+	for (int i = 1; i <= n; i++)
 	{
-		for (int j = 0; j <= max_weight; j++)
+		for (int j = 1; j <=  k; j++)
 		{
-			if (j >= item[i].first) {
-				dp[i][j] = max(dp[i - 1][j - item[i].first] + item[i].second, dp[i - 1][j]);
+			if (j > items[i][0]) {
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - items[i][0]] + items[i][1]);
 			}
-			else {
+			else
 				dp[i][j] = dp[i - 1][j];
-			}
 		}
 	}
-
-	cout << dp[bags][max_weight];
+	cout << dp[n][k];
 
 
 	return 0;
