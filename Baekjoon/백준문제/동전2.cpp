@@ -1,39 +1,35 @@
-#include <iostream>
-#include <vector>
+//2021.03.13 - dp
+//2294
+
+#include <iostream>	
 #include <algorithm>
+#include <vector>
+#include <cstring>
 
 using namespace std;
 
 int main() {
 	int n, k;
-	cin >> n >> k;
-	vector<int>v;
+	int coins[101];
 	int dp[10001];
-	memset(dp, -1, sizeof(int) * 10001);
-	int temp;
-	for (int i = 0; i < n; i++)
-	{
-		cin >> temp;
-		if (v.end() == find(v.begin(), v.end(), temp)) {
-			v.push_back(temp);
-			dp[temp] = 1;
-		}
-	}
-	sort(v.begin(), v.end());
-	
+	cin >> n >> k;
 	for (int i = 1; i <= k; i++)
 	{
-		for (int j = 0; j < v.size(); j++)
-		{
-			if (i > v[j] && dp[i-v[j]]!=-1) {
-				if (dp[i] != -1)
-					dp[i] = min(dp[i - v[j]] + 1, dp[i]);
-				else
-					dp[i] = dp[i - v[j]] + 1;
-			}
-		}
-
+		dp[i] = 100000;
 	}
-	cout << dp[k];
+	dp[0] = 0;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> coins[i];
+		for (int j = coins[i]; j <= k; j++)
+		{
+			dp[j] = min(dp[j], dp[j - coins[i]] + 1);
+		}
+	}
+	if (dp[k] == 100000)
+		cout << -1;
+	else cout << dp[k];
+
+
 	return 0;
 }
