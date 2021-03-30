@@ -1,37 +1,41 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
+int dp[1010][1010][2];
+int cost[1010];
+
+
+int solve(int i, int j, int flag) {
+	int &ret = dp[i][j][flag];
+	if (ret != -1) return ret;
+	if (i >= j) {
+		if (!flag) return ret = cost[i];
+		else return ret = 0;
+	}
+	if (!flag) { //gnu
+		return ret = max(solve(i + 1, j, !flag) + cost[i], solve(i, j - 1, !flag) + cost[j]);
+	}
+	else {
+		return ret = min(solve(i + 1, j, !flag), solve(i, j - 1, !flag));
+	}
+}
+
 int main() {
-	int T,n;
-	cin >> T;
-	while (T--) {
+	int t;
+	cin >> t;
+	while (t--) {
+		memset(dp, -1, sizeof(dp));
+		int n;
 		cin >> n;
-		int * arr = new int[n];
 		for (int i = 0; i < n; i++)
 		{
-			cin >> arr[i];
+			cin >> cost[i];
 		}
-		int x=0, y=n-1,idx=0,answer=0,temp;
-		while (x <= y) {
-			if (arr[x] >= arr[y]) {
-				temp = arr[x];
-				x += 1;
-			}
-			else {
-				temp = arr[y];
-				y -= 1;
-			}
-			if (idx % 2 == 0) {
-				answer += temp;
-			}
-			idx++;
-
-		}
-		cout << answer<<"\n";
+		cout << solve(1, n, 0) < "\n";
+			
 	}
 
-
-	return 0;
 }
