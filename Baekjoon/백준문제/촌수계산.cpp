@@ -1,32 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <cstring>
 #include <queue>
 using namespace std;
 
 vector<vector<int> > relation(101);
-bool visit[101] = { false, };
+int visit[101] = { -1, };
 
 int bfs(int x, int y) {
-
-	queue<pair<pair<int, int>,bool*> > q;//q:
-	q.push({ { x,0 },visit });
+	queue<int>q;
+	q.push(x);
+	visit[x] = 0;
 	while (!q.empty()) {
-		int a = q.front().first.first;
-		int count = q.front().first.second;
-		visit[a] = true;
+		int a = q.front();
 		q.pop();
-		if (a == y)
-			return count;
-		for (int i = 0; i < relation[a].size(); i++)
+		for (int i = 0; i < relation[a].size() ; i++)
 		{
-			if (relation[a][i] != a &&!visit[relation[a][i]]) {
-				q.push({ { relation[a][i], count + 1 },visit });
-			}
+			if (visit[relation[a][i]]==-1)
+				q.push(relation[a][i]), visit[relation[a][i]] = visit[a]+ 1;
 		}
-
 	}
-	return -1;
-
+	return visit[y];
 }
 
 int main() {
@@ -44,7 +38,7 @@ int main() {
 		relation[temp_x].push_back(temp_y);
 		relation[temp_y].push_back(temp_x);
 	}
-
+	memset(visit, -1, sizeof(visit));
 	cout<<bfs(x, y);
 
 
