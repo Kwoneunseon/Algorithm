@@ -12,7 +12,7 @@ int dx[] = { 0,0,1,-1 };
 int dy[] = { 1,-1,0,0 };
 int n;
 
-void bfs_ground(int a, int b, int count) {
+void bfs_ground(int a, int b, int id) {
 	queue<pair<int, int> >q;
 	int x, y, next_x, next_y;
 	x = a, y = b;
@@ -21,7 +21,7 @@ void bfs_ground(int a, int b, int count) {
 	while (!q.empty()) {
 		x = q.front().first;
 		y = q.front().second;
-		map[x][y] = count;
+		map[x][y] = id;
 		q.pop();
 		for (int i = 0; i < 4; i++)
 		{
@@ -38,14 +38,14 @@ void bfs_ground(int a, int b, int count) {
 	}
 }
 
-int bfs_bridge(int count) {
+int bfs_bridge(int id) {
 	queue<pair<int, int> >q;
 	int distance = 0;
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			if (map[i][j] == count) {
+			if (map[i][j] == id) {
 				q.push({ i,j });
 				visit[i][j] = true;
 			}
@@ -72,7 +72,7 @@ int bfs_bridge(int count) {
 						q.push({ next_x,next_y });
 						visit[next_x][next_y] = true;
 					}
-					else if (map[next_x][next_y] != count)
+					else if (map[next_x][next_y] != id)
 						return distance;
 				}
 			}
@@ -98,21 +98,21 @@ int main() {
 		}
 	}
 	memset(visit, false, sizeof(visit));	
-	int count = 1;
+	int id = 1;
 	//대륙별로 id부여하기
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
 			if (map[i][j] == 1&&!visit[i][j]) {
-				bfs_ground(i, j, count++);
+				bfs_ground(i, j, id++);
 			}
 		}
 	}
 
 	//대륙사이 가장 짧은 거리 구하기
 	int result = 100000;
-	for (int i = 1; i < count; i++)
+	for (int i = 1; i < id; i++)
 	{
 		memset(visit, false, sizeof(visit));
 		result = min(result, bfs_bridge(i));
