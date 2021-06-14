@@ -5,7 +5,7 @@
 using namespace std;
 long long n, k;
 
-int count(long long mid) {
+long long count(long long mid) {
 	long long sum = 0;
 	for (long long i = 1; i <= n; i++)
 	{
@@ -22,12 +22,13 @@ int main() {
 	cin >> n >> k;
 	long long first, end;
 	first = 1, end = n * n;
-	while (first < end) {
+	while (first <= end) {
 		long long mid = (first + end) / 2;
 		if (count(mid) < k)
-			first = mid + 1;
-		else
+			first = mid+1;
+		else {
 			end = mid - 1;
+		}
 	}
 
 	cout << first;

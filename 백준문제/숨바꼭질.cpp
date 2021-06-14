@@ -23,8 +23,8 @@ int main() {
 		int x = q.front().first;
 		int cnt = q.front().second;
 		q.pop();
-		if ((y_loc == x - 1) || (y_loc == x + 1) || (y_loc == 2 * x)) {
-			answer = cnt + 1;
+		if (x == y_loc) {
+			answer = cnt;
 			break;
 		}
 		if (valid(x + 1)) {

@@ -3,14 +3,14 @@
 
 using namespace std;
 
-int getRootgate(vector<int>& gate, int a) {
+int get_Rootgate(vector<int>& gate, int a) {
 	if (gate[a] == a)return a;
-	return gate[a] = getRootgate(gate,gate[a]);
+	return gate[a] = get_Rootgate(gate,gate[a]);
 }
 
+//a는 main함수 안에서 구했기 때문에 다시 구하지 않는다.
 void Union_gate(vector<int>& gate, int a, int b) {
-	//a = getRootgate(gate, a);
-	b = getRootgate(gate, b);
+	b = get_Rootgate(gate, b);
 	gate[a] = b;
 }
 
@@ -34,7 +34,7 @@ int main() {
 	for (int i = 0; i < P; i++)
 	{
 		cin >> plane[i];
-		int Rootgate = getRootgate(gate, plane[i]);
+		int Rootgate = get_Rootgate(gate, plane[i]);
 
 		if (Rootgate != 0 && flag) {
 			Union_gate(gate, Rootgate, Rootgate - 1);
