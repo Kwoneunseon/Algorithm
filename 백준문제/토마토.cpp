@@ -1,83 +1,67 @@
 #include <iostream>
+#include <algorithm>
 #include <queue>
-#include <vector>
-
 using namespace std;
+typedef pair<pair<pair<int, int>, int>, int> Info;
 
-int row, col, tomato = 0, day = -1, tcnt = 0;
-vector<vector<int> >box;
-int dx[] = { 0,0,1,-1 };
-int dy[] = { 1,-1,0,0 };
-bool check_tomato[1000][1000] = { false, };
-vector<pair<int, int> > start;
+int x, y, z;
+bool visit[101][101][101] = { false, };
+int tomato[101][101][101] = { 0, };
 
-void bfs() {
-	queue<queue<pair<int, int> > > q;
-	queue<pair<int, int> > ele;
-	
-	int x, y;
-	for (int i = 0; i < start.size(); i++)
-	{
-		x = start[i].first;
-		y = start[i].second;
-		ele.push(start[i]);
-		check_tomato[x][y] = true;
-	}
-	q.push(ele);
-	while (!q.empty()) {
-		queue<pair<int, int> > new_ele;
-		day++;
-		ele = q.front();
-		q.pop();
-		while (!ele.empty()) {
-			x = ele.front().first;
-			y = ele.front().second;
-			ele.pop();
-			check_tomato[x][y] = true;
-			for (int i = 0; i < 4; i++)
-			{
-				int nextX = x + dx[i];
-				int nextY = y + dy[i];
-				if (nextX < row&&nextX >= 0 && nextY < col&&nextY >= 0 && check_tomato[nextX][nextY] == false) {
-					if (box[nextX][nextY] == 0) {
-						box[nextX][nextY] = 1;
-						tcnt++;
-						new_ele.push(make_pair(nextX, nextY));
-					}
-				}
-			}
-		}
-		if (!new_ele.empty()) {
-			q.push(new_ele);
-		}
-	}
-}
+int dx[6] = { 1,-1,0,0,0,0 };
+int dy[6] = { 0,0,1,-1,0,0 };
+int dz[6] = { 0,0,0,0,1,-1 };
 
 int main() {
-	cin >> col >> row;
-	int temp;
-	for (int i = 0; i < row; i++)
+	queue<Info>q;
+	int count = 0, day = 0, empty = 0,finish_day;
+	cin >> x >> y >> z;
+	//토마토 입력
+	for (int i = 0; i < z; i++)
 	{
-		vector<int>v;
-		for (int j = 0; j < col; j++)
+		for (int j = 0; j < y; j++)
 		{
-			cin >> temp;
-			if (temp != 0) {
-				if (temp == 1) {
-					start.push_back(make_pair(i, j));
+			for (int k = 0; k < x; k++)
+			{
+				cin >> tomato[j][k][i];
+				if (tomato[j][k][i] == 1) {
+					q.push({ {{j,k},i },day });
+					visit[j][k][i] == true;
 				}
-				tomato++;
+				else if (tomato[j][k][i] == -1)
+					empty++;
 			}
-			v.push_back(temp);
 		}
-		box.push_back(v);
 	}
-	tomato = row * col - tomato;
 
-	bfs();
-	if (tcnt != tomato)
-		day = -1;
-	cout << day;
+	int col, row, height, new_col, new_row, new_height;
+	while (!q.empty()) {
+		col = q.front().first.first.second;
+		row = q.front().first.first.first;
+		height = q.front().first.second;
+		day = q.front().second;
+		finish_day = max(finish_day, day);
+		count = count + 1;
+		q.pop();
+		for (int i = 0; i < 6; i++)
+		{
+			new_col = col + dx[i];
+			new_row = row + dy[i];
+			new_height = height + dz[i];
+			if (new_col >= 0 && new_row >= 0 && new_height >= 0 && new_col < x &&new_row < y&&new_height < z) {
+				if (!visit[new_row][new_col][new_height] && tomato[new_row][new_col][new_height]==0) {
+					q.push({ {{new_row,new_col},new_height },day+1});
+					visit[new_row][new_col][new_height] = true;
+				}
+			}
+
+		}
+	}
+	if (count == x * y*z - empty)
+		cout << finish_day;
+	else
+		cout << -1;
+
 
 	return 0;
 }
