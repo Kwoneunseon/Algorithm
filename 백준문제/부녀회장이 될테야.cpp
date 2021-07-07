@@ -17,9 +17,8 @@ int main() {
 		while (k--) {
 			for (int i = 1; i <= n; i++)
 			{
-				temp[i] = dp[i] + temp[i - 1];
+				dp[i] = dp[i] + dp[i - 1];
 			}
-			dp = temp;
 		}
 		cout << dp[n];
 	}
