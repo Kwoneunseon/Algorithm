@@ -8,7 +8,7 @@ int main() {
 	cin >> T;
 	while (T--) {
 		cin >> k >> n;//kÃş nÈ£;
-		vector<int> temp(n+2),dp(n+2);
+		vector<int> dp(15);
 		for (int i = 0; i <= n; i++)
 		{
 			dp[i] = i;
@@ -20,7 +20,7 @@ int main() {
 				dp[i] = dp[i] + dp[i - 1];
 			}
 		}
-		cout << dp[n];
+		cout << dp[n]<<"\n";
 	}
 
 
