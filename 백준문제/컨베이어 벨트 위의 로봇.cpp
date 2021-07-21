@@ -16,14 +16,10 @@ int main() {
 	}
 	//처음 상자를 올릴 때.
 
-	con[0].first--;
-	con[0].second = true;
-	if (con[0].first == 0)
-		zeros++;
-
 	pair<int, bool> temp1, temp2;
-	while (zeros != k) {
+	while (true) {
 		//컨테이너를 먼저 옮긴다.
+		cnt++;
 		temp1 = con[0];
 		for (int i = 1; i < 2 * n; i++)
 		{
@@ -37,36 +33,38 @@ int main() {
 				temp2 = con[i];
 				con[i] = temp1;
 				temp1 = temp2;
+				if (i == n - 1) {
+					con[i].second = false;//박스를 내려준다.
+				}
 			}
 		}
-		//상자 올리기
-		if (con[0].first != 0) {
-			con[0].first--;
-			con[0].second = true;
-			if (con[0].first == 0)
-				zeros++;
-		}
-		for (int i = n-1; i >= 1; i--)
+		for (int i = n-2; i >= 0 ; i--)
 		{
-			if (i == n-1) { //박스 내리는 위치
-				con[i + 1].second = false;
-			}
-			else if(con[i].second == true) {
+			if(con[i].second == true) {
 				//옆 칸에 로봇이 있는지 확인하고 내구도 1이상일 때 움직이게 한다.
-				if (con[i + 1 ].second == false && con[i + 1].first != 0) {
+				if (con[i + 1].second == false && con[i + 1].first > 0) {
 					con[i].second = false;
 					con[i + 1].second = true;
 					con[i + 1].first--;
-					if (con[i + 1].first == 0)
+					if (con[i+1].first == 0)
 						zeros++;
 					i++;
 				}
 			}
 		}
-		cnt++;
+		//상자 올리기
+		if (con[0].first > 0 && con[0].second == false) {
+			con[0].first--;
+			con[0].second = true;
+			if (con[0].first == 0)
+				zeros++;
+		}
+
+		if (zeros >= k)
+			break;
 
 	}
 	cout << cnt;
 
-	return 0;
+ 	return 0;
 }
