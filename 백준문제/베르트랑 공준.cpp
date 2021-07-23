@@ -4,40 +4,46 @@
 using namespace std;
 
 int main() {
-	int n=1;
+	int n = 1, max = -1;
 	vector<int> v;
-	int arr[300000] = { 1, };
-	cin >> n;
-	while (n != 0) {
-		cin >> n;
-		v.push_back(n);
-	}
 
-	
-	for (int i = 1; i <= v[v.size()-1]; i++)
+	while (true) {
+		cin >> n;
+		if (n == 0)
+			break;
+		v.push_back(n);
+		if (max < n)
+			max = n;
+	}
+	int *arr = new int[2 * max+1];
+	for (int i = 1; i <= 2*max; i++)
 	{
-		if (arr[i] != 0) {
-			for (int j = i * i; j <= v[v.size() - 1]; j += i)
-			{
-				if (arr[j] != 0)
-					arr[j] = 0;
-			}
+		arr[i] = 1;
+	}
+	arr[1] = 0;
+	for (int i = 2; i <= 2*max; i++)
+	{
+		if (arr[i] == 0)
+			continue;
+		for (int j =i*2; j <= 2*max; j+=i)
+		{
+			arr[j] = 0;
 		}
 	}
-	int first=0, last=1,cnt=0;
-	while (true) {
+	int cnt=0;
+	
+	for (int i = 0; i < v.size(); i++)
+	{
 		cnt = 0;
-		for (int i = v[first]; i <= v[last]; i++)
+		for (int j = v[i]+1; j <= 2*v[i]; j++)
 		{
-			if (arr[i] != 0)
+			if (arr[j] != 0)
 				cnt++;
+
 		}
 		cout << cnt << "\n";
-		first++;last++;
-		if (last = v.size())
-			break;
+
 	}
-	
 
 
 	return 0;

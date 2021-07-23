@@ -48,7 +48,7 @@ int main() {
 					con[i + 1].first--;
 					if (con[i+1].first == 0)
 						zeros++;
-				}
+				}//여기서 i++를 해서 계속 틀렸음.이건 움직인 위치를 다시 확인하는 것 피하기 위해서 였는데 , 역순이기 떄문에 할 필요 없었음.
 			}
 		}
 		if (con[n - 1].second)con[n - 1].second = false;//내려준다.
