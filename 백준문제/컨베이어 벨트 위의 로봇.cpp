@@ -48,10 +48,10 @@ int main() {
 					con[i + 1].first--;
 					if (con[i+1].first == 0)
 						zeros++;
-					i++;
 				}
 			}
 		}
+		if (con[n - 1].second)con[n - 1].second = false;//내려준다.
 		//상자 올리기
 		if (con[0].first > 0 && con[0].second == false) {
 			con[0].first--;
