@@ -1,12 +1,12 @@
 #include <iostream>
-#define PI 3.14159;
+#define PI 3.14159265;
 
 using namespace std;
 
 int main() {
 	double R,area1,area2;
 	cin >> R;
-	area1 =R * R*PI;
+	area1 =R * R *PI;
 	area2 = (2 * R)*R;
 	cout.setf(ios::fixed);
 	cout.precision(6);
