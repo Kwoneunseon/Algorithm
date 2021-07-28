@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-
+// 처음에 하나하나 찾아갈려고했음
+// 해결책 => 분할정책
 int r, c, ans = 0;
 
 void find(int y, int x, int size) {
