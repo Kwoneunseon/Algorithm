@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <queue>
 
@@ -9,6 +9,7 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	int N,temp;
 	cin >> N;
+	//우선순위 큐를 사용해서 해결
 	priority_queue<int, vector<int>, greater<int> > pq;
 	for (int i = 0; i < N; i++)
 	{
