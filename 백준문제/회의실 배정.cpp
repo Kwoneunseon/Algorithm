@@ -1,54 +1,41 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <algorithm>
 
 using namespace std;
+//원래 아이디어 : 시간의 차 순으로 오름차순 정렬
+//정답 :  끝나는 시간을 기준으로 오름차순 정렬
 
-bool compare(pair<int, pair<int,int>> a,pair<int, pair<int, int>> b) {
-	if (a.first == b.first)
-		return a.second.first < b.second.first;
-	else
+bool compare( pair<int,int> a, pair<int, int> b) {
+	if (a.second == b.second)
 		return a.first < b.first;
+	else
+		return a.second < b.second;
 }
 
 int main() {
 	cin.tie(NULL);
 	ios_base::sync_with_stdio(false);
-	int n,first,last,dif,answer= 0,max=-1;
+	int n,first,last,answer= 1,max=-1;
 	cin >> n;
-	vector < pair<int, pair<int, int> >>schedule;
+	vector<pair<int, int> >schedule;
 
 	for (int i = 0; i < n; i++)
 	{
 		cin >> first >> last;
-		dif = last - first;
-		if (last > max)
-			max = last;
-		schedule.push_back({ dif,{first,last} });
+		schedule.push_back({ first,last });
 	}
-	vector<int> time(max + 1);
 	sort(schedule.begin(), schedule.end(),compare);
-	bool check = false;
-	for (int i = 0; i < n; i++)
+	//종료시간보다 나중에 있는 시작시간이 크거나 같다면 OK
+	int now = schedule[0].second;
+	for (int i = 1; i < n; i++)
 	{
-		check = false;
-		for (int j = schedule[i].second.first+1; j <= schedule[i].second.second; j++)
-		{
-			if (time[j] != 0) {
-				check = true;
-				break;
-			}
-		}
-		if (check)
-			continue;
-		else {
+		if (now <= schedule[i].first) {
 			answer++;
-			for (int j = schedule[i].second.first; j <= schedule[i].second.second; j++)
-			{
-				time[j] = 1;
-			}
+			now = schedule[i].second;
 		}
 	}
+	
 
 	cout << answer;
 	return 0;
