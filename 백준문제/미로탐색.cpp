@@ -1,62 +1,67 @@
-﻿//2178
-//bfs사용
-//대표적인 bfs문제 -> 최단 거리를 찾을때 사용됨.
-#include <iostream>
-#include <vector>
-#include <queue>
+﻿#include <iostream>
 #include <string>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
-int dx[] = { 0,1,0,-1 };
-int dy[] = { 1,0,-1,0 };
-bool visit[100][100] = { false, };
-int row, col;
-vector<vector<int> > miro;
+vector<vector<int> > map;
+bool visit[101][101] = { false, };
+int n, m;
 
-int bfs(int a, int b,int cnt) {
-	int x, y, next_x, next_y;
-	queue<pair<pair<int, int>, int> > q;
-	q.push(make_pair(make_pair(a, b), cnt));
+int dx[] = { 1,-1,0,0 };
+int dy[] = { 0,0,1,-1 };
+
+int bfs(int a,int b) {
+	int answer = 0;
+	int x, y, new_x, new_y;
+	queue<pair<pair<int, int> ,int>>q;
+	q.push(make_pair(make_pair(a, b), 1));
 	visit[a][b] = true;
 	while (!q.empty()) {
 		x = q.front().first.first;
 		y = q.front().first.second;
-		cnt = q.front().second ;
+		answer = q.front().second;
 		q.pop();
-		if (x == row - 1 && y == col - 1)
-			return cnt;
+
+		if (x == n - 1 && y == m - 1) {
+			return answer;
+		}
 		for (int i = 0; i < 4; i++)
 		{
-			next_x = x + dx[i];
-			next_y = y + dy[i];
-			if (next_x < row&&next_x >= 0 && next_y < col&&next_y >= 0 && !visit[next_x][next_y]) {
-				visit[next_x][next_y] = true;
-				if(miro[next_x][next_y]==1)
-					q.push(make_pair(make_pair(next_x, next_y), cnt+1));
+			new_x = x + dx[i];
+			new_y = y + dy[i];
+			if (new_x >= 0 && new_y >= 0 && new_x < n &&new_y < m && !visit[new_x][new_y]) {
+				if (map[new_x][new_y] == 1) {
+					q.push(make_pair(make_pair(new_x, new_y), answer + 1));
+					visit[new_x][new_y] = true;
+				}
 			}
+
 		}
 
 	}
-	return cnt;
 
+
+	return -1;
 }
 
-int main() {
-	cin >> row >> col;
-	string s_num;
-	for (int i = 0; i < row; i++)
-	{
-		vector<int>nums;
-		cin >> s_num;
-		for (int j = 0; j < col; j++)
-		{
-			nums.push_back(s_num[j] - '0');
-		}
-		miro.push_back(nums);
-	}
 
-	cout << bfs(0, 0,1);
+int main() {
+	cin >> n >> m;
+	string temp;
+	for (int i = 0; i < n; i++)
+	{
+		vector<int >v;
+		cin >> temp;
+		for (int j= 0; j < m; j++)
+		{
+			v.push_back(temp[j]-'0');
+		}
+		map.push_back(v);
+	}
+	cout << bfs(0, 0);
+	
 
 
 	return 0;
