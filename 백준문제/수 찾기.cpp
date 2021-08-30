@@ -1,41 +1,44 @@
-#include <vector>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-vector<int>arr;
-//이분탐색
-int check(int start,int end,int target) {
-	if (start > end)return 0;
+vector<int>v;
+//parameter에 vector가 들어가면 시간초과가 뜸.
+bool binary_search(int start, int end,int key) {
+	if (start > end) return false;
+
 	int mid = (start + end) / 2;
-	if (arr[mid] == target)
-		return 1;
-	else if (arr[mid] < target)
-		return check( mid+1, end, target);
+
+	if (v[mid] == key)
+		return true;
+	else if (v[mid] > key)
+		return binary_search(start, mid - 1, key);
 	else
-		return check(start,mid-1, target);
+		return binary_search(mid + 1, end, key);
 }
 
 int main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-	int arr_size, test_size;
-	cin >> arr_size;
-	int temp;
-	for (int i = 0; i < arr_size;i++)
-	{
-		cin >> temp;
-		arr.push_back(temp);
-	}
-	sort(arr.begin(), arr.end());
-	cin >> test_size;
-	for (int i = 0; i < test_size; i++)
-	{
-		cin >> temp;
-		cout << check( 0, arr.size() - 1, temp)<<"\n";
-	
-	}
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
+	int n,temp;
+	cin >> n;
+	
+	for (int i = 0; i < n; i++)
+	{
+		cin >> temp;
+		v.push_back(temp);
+	}
+	sort(v.begin(), v.end());
+
+	int T,key;
+	cin >> T;
+	while (T--) {
+		cin >> key;
+		cout << binary_search(0, n - 1, key)<<"\n";
+	}
 	return 0;
 }
