@@ -1,75 +1,77 @@
-//1012
-//bfs »ç¿ë
 #include <iostream>
-#include <vector>
-#include <cstring>
 #include <queue>
+#include <string.h>
+
 using namespace std;
 
-int map[50][50];
-bool visit[50][50];
-int width, height;
-int dx[] = { 0,0,1,-1 };
-int dy[] = { 1,-1,0,0 };
+bool visit[51][51] = { false, };
+int map[51][51] = { 0, };
 
-void bfs(int a, int b) {
-	int x, y, next_x, next_y;
-	queue<pair<int, int> > q;
-	q.push(make_pair(a, b));
-	visit[a][b] = true;
+int dx[] = { 1,-1,0,0 };
+int dy[] = { 0,0,1,-1 };
+
+int M, N;
+
+void bfs(int row, int col) {
+	int x, y, new_x, new_y;
+	queue<pair<int, int> >q;
+	q.push({ row, col });
+	visit[row][col] = true;
 	while (!q.empty()) {
 		x = q.front().first;
 		y = q.front().second;
 		q.pop();
+
 		for (int i = 0; i < 4; i++)
 		{
-			next_x = x + dx[i];
-			next_y = y + dy[i];
-			if (next_x >= 0 && next_x < height&& next_y >= 0 && next_y < width && !visit[next_x][next_y]) {
-				if (map[next_x][next_y] == 1)
-					q.push(make_pair(next_x, next_y));
- 				visit[next_x][next_y] = true;
+			new_x = x + dx[i];
+			new_y = y + dy[i];
+			if (new_x >= 0 && new_x < M&&new_y >= 0 && new_y < N && !visit[new_x][new_y]) {
+				if (map[new_x][new_y] == 1) {
+					visit[new_x][new_y] = true;
+					q.push({ new_x,new_y });
+				}
 			}
+
 		}
+
+
 	}
+
 
 }
 
 
 int main() {
-	int testcase,cnt=0,x,y;
-	int earthworm = 0;
-	cin >> testcase;
-	int *answer = new int[testcase];
-	for (int i = 0; i < testcase; i++)
-	{
-		memset(map, 0, sizeof(map));
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int T,K,row,col,count;
+	cin >> T;
+	while (T--) {
+		cin >> M >> N >> K;
+		count = 0;
 		memset(visit, false, sizeof(visit));
-		earthworm = 0;
-		cin >> height >>width>> cnt;
-		for (int j = 0; j < cnt; j++)
+		memset(map, 0, sizeof(map));
+		for (int i = 0; i < K; i++)
 		{
-			cin >> x >> y;
-			map[x][y] = 1;
+			cin >> row >> col;
+			map[row][col] = 1;
 		}
-
-		for (int j = 0; j < height; j++)
+		for (int i = 0; i < M; i++)
 		{
-
-			for (int k = 0; k < width; k++)
+			for (int j = 0;  j < N;  j++)
 			{
-				if (visit[j][k] == false && map[j][k] == 1) {
-					bfs(j, k);
-					earthworm++;
+				if (map[i][j] == 1 && !visit[i][j]) {
+					count++;
+					bfs(i, j);
 				}
 			}
 		}
-
-
-
-		cout <<earthworm<<"\n";
+		cout << count<<"\n";
 
 	}
+
 
 	return 0;
 }
