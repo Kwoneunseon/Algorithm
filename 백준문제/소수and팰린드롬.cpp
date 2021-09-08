@@ -4,14 +4,16 @@
 
 using namespace std;
 
-bool nums[1000001] = { true, };
+//N이 백만이 들어올 것을 감안해서
+bool nums[1004000] = { true, };
 
 void erathos() {
-	for (int i = 2; i <=1000000 ; i++)
+	nums[1] = false;
+	for (int i = 2; i <=1004000 ; i++)
 	{
 		if (nums[i] == false)
 			continue;
-		for (int j = i+i; j <= 1000000; j+=i)
+		for (int j = i+i; j <= 1004000; j+=i)
 		{
 			nums[j] = false;
 		}
@@ -20,7 +22,7 @@ void erathos() {
 
 bool check_palin(int n) {
 	string str = to_string(n);
-	for ( int i = 0; i <str.length()/2; i++)
+	for ( int i = 0; i <str.size()/2; i++)
 	{
 		if (str[i] != str[str.size() - i - 1])
 			return false;
@@ -32,9 +34,12 @@ int main() {
 	cin.tie(NULL);
 	ios::sync_with_stdio(false);
 
+	memset(nums, true, sizeof(nums));
+
 	int n;
 	string s;
 	cin >> n;
+	erathos();
 	for (int i = n; ; i++)
 	{
 		if (nums[i] && check_palin(i)){
