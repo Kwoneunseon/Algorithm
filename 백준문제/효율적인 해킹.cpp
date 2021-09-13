@@ -7,22 +7,22 @@
 using namespace std;
 
 vector<vector<int> > v(10001);
-bool visit[10001] = { false, };
+bool visit_edge[10001] = { false, };
 
 int dfs(int start) {
 	int count = 0;
 	queue <int>q;
 	q.push(start);
-	visit[start] = true;
+	visit_edge[start] = true;
 	while (!q.empty()) {
 		int now = q.front();
 		q.pop();
 		for (int i = 0; i < v[now].size(); i++)
 		{
-			if (!visit[v[now][i]]) {
+			if (!visit_edge[v[now][i]]) {
 				count++;
 				q.push(v[now][i]);
-				visit[v[now][i]] = true;
+				visit_edge[v[now][i]] = true;
 			}
 		}
 	}
@@ -42,7 +42,7 @@ int main() {
 	}
 	for (int i = 1; i <= n; i++)
 	{
-		if (!visit[i]) {
+		if (!visit_edge[i]) {
 			int count = dfs(i);
 			if (max < count) {
 				max = count;
@@ -53,7 +53,7 @@ int main() {
 				answer.push_back(i);
 			}
 		}
-		memset(visit, false, sizeof(visit));
+		memset(visit_edge, false, sizeof(visit_edge));
 	}
 	for (int i = 0; i < answer.size(); i++)
 	{
