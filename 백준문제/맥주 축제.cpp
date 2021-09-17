@@ -31,24 +31,28 @@ int main() {
 		b.push_back(beer);
 	}
 	sort(b.begin(), b.end(), cmp);
-	int temp;
 	vector<int> check;
-	for (int i = 0; i < b.size(); i++)
+	for (int i = 0; i < k; i++)
 	{
 		check.push_back(b[i].v);
 		sum += b[i].v;
-		if (check.size() == n && sum >= m) {
-			answer = b[i].c;
-			break;
-		}
-		else if (check.size() == n ) {
-			sum -= b[i].v;
-			check.pop_back();
+	
+		if (check.size() == n) {
+			if (sum >= m) {
+				answer = b[i].c;
+				break;
+			}
+			else {
+				sum -= b[i].v;
+				check.pop_back();
+			}
 		}
 
 	}
-	
-	cout << answer;
+	if (answer != -1)
+		cout << answer;
+	else
+		cout << "-1";
 
 	return 0;
 }
