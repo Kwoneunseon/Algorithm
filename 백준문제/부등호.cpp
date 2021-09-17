@@ -18,7 +18,7 @@ int main() {
 	cin.tie(NULL);
 
 	int k;
-	vector<int> small(10), big(10);
+	vector<int> num(10);
 	vector<char> inequality;
 	char temp;
 	cin >> k;
@@ -27,29 +27,31 @@ int main() {
 		cin >> temp;
 		inequality.push_back(temp);
 	}
-	for (int i = 0; i <= 9; i++)
+	for (int i = 9; i >=0 ; i--)
 	{
-		small[i] = i;
-		big[i] = 9 - i;
+		num[9-i] = i;
 	}
 
+	
 	do {
-		if (check(small, inequality)) break;
-	} while (next_permutation(small.begin(), small.end()));
-
-
-	do {
-		if (check(big, inequality))break;
-	} while (next_permutation(big.rbegin(), big.rend()));
+		if (check(num, inequality)) break;
+	} while (next_permutation(num.rbegin(), num.rend()));
 
 	for (int i = 0; i <= k; i++)
 	{
-		cout << big[i];
+		cout << num[i];
 	}
+
 	cout << "\n";
+	sort(num.begin(), num.end());
+
+	do {
+		if (check(num, inequality))break;
+	} while (next_permutation(num.begin(), num.end()));
+
 	for (int i = 0; i <= k; i++)
 	{
-		cout << small[i];
+		cout << num[i];
 	}
 	
 	return 0;
