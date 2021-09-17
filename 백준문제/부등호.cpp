@@ -35,7 +35,7 @@ int main() {
 	
 	do {
 		if (check(num, inequality)) break;
-	} while (next_permutation(num.rbegin(), num.rend()));
+	} while (prev_permutation(num.begin(), num.end()));
 
 	for (int i = 0; i <= k; i++)
 	{
