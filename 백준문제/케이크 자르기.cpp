@@ -4,59 +4,19 @@
 
 using namespace std;
 
-class Node {
-public:
-	int value;
-	int index;
-};
-
-bool cmp(Node a, Node b) {
-	if (a.value == b.value)
-		return a.index < b.index;
-	return a.value < b.value;
+bool cake_count(vector<int>v, int cnt, int standard) {
+	int sum = 0, cake_cnt = 0;
+	for (int i = 0; i < v.size(); i++)
+	{
+		sum += v[i];
+		if (sum >= standard) {
+			cake_cnt++;
+			sum = 0;
+		}
+	}
+	return cake_cnt > cnt;
 }
 
-int solution(vector<int> cakes, int cnt, int M) {
-	int v_size = cakes.size();
-	vector<Node> v;
-
-	Node temp;
-	for (int i = 0; i < v_size; i++)
-	{
-		temp.value = cakes[i];
-		temp.index = i;
-		v.push_back(temp);
-	}
-	sort(v.begin(), v.end(), cmp);
-	int i = 0;
-	while (M != cnt) {
-		int idx = v[i].index;
-		if (idx == 0) {
-			cakes[idx + 1] += cakes[idx];
-		}
-		else if (idx == cakes.size() - 1) {
-			cakes[idx - 1] += cakes[idx];
-		}
-		else {
-			if (cakes[idx - 1] > cakes[idx + 1])
-				cakes[idx + 1] += cakes[idx];
-			else
-				cakes[idx - 1] += cakes[idx];
-		}
-		cakes.erase(cakes.begin() + idx);
-		M--;
-		i++;
-	}
-	int min = 4000001;
-	for (int i = 0; i < cakes.size(); i++)
-	{
-		if (cakes[i] < min)
-			min = cakes[i];
-
-	}
-	return min;
-
-}
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -78,7 +38,14 @@ int main() {
 
 	while (N--) {
 		cin >> cnt;
-		cout << solution(cakes, cnt, M);
+		int low = 1, high = cake_length;
+		while (high - low > 1) {
+			int mid = (low + high) / 2;
+			if (cake_count(cakes, cnt, mid)) low = mid;
+			else
+				high = mid;
+		}
+		cout << low <<"\n";
 	}
 	return 0;
 }
