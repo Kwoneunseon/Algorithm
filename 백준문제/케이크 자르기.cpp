@@ -1,51 +1,52 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-bool cake_count(vector<int>v, int cnt, int standard) {
-	int sum = 0, cake_cnt = 0;
+bool cake_count(vector<int> v, int size, int standard) {
+	int sum_now = 0, count = 0;
 	for (int i = 0; i < v.size(); i++)
 	{
-		sum += v[i];
-		if (sum >= standard) {
-			cake_cnt++;
-			sum = 0;
+		sum_now += v[i];
+		if (sum_now >= standard) {
+			count++;
+			sum_now = 0;
 		}
 	}
-	return cake_cnt > cnt;
+	return count > size;
 }
-
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int N, M, cnt, cake_length;
-	cin >> N >> M >> cake_length;
-	vector<int> cakes;
-
-	int front = 0, end;
-
-	for (int i = 0; i < M; i++)
+	int n, m, cake_length,q;
+	cin >> n >> m >> cake_length;
+	vector<int> cake;
+	int first=0, last;
+	for (int i = 0; i < m; i++)
 	{
-		cin >> end;
-		cakes.push_back(end - front);
-		front = end;
+		cin >> last;
+		cake.push_back(last - first);
+		first = last;
 	}
-	cakes.push_back(cake_length - front);
+	cake.push_back(cake_length - first);
 
-	while (N--) {
-		cin >> cnt;
-		int low = 1, high = cake_length;
-		while (high - low > 1) {
-			int mid = (low + high) / 2;
-			if (cake_count(cakes, cnt, mid)) low = mid;
-			else
-				high = mid;
+	while(n--) 
+	{
+		cin >> q;
+		first = 1, last = cake_length;
+		while (first +1 < last) {
+			int mid = (first + last) / 2;
+			if (cake_count(cake, q, mid))first = mid;
+			else last = mid;
 		}
-		cout << low <<"\n";
+
+		cout << first<<"\n";
+
 	}
+
+
+
 	return 0;
 }
