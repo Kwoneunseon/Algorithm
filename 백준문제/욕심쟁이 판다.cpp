@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <queue>
 #include <algorithm>
 #include <cstring>
@@ -10,40 +10,34 @@ int dp[500][500] = { 0, };
 int dx[] = { 1,-1,0,0 };
 int dy[] = { 0,0,1,-1 };
 int n;
-bool visit[500][500] = { false, };
 
 int count(int a, int b) {
 	int max_cnt = 1;
-	memset(visit, false, sizeof(visit));
-	queue<pair<pair<int, int>,int>> q;
-	q.push({ { a,b },1 });
-	int x, y, next_x, next_y,cnt;
+	queue<pair<int, int>> q; //판다의 위치 x,y 그리고 움직인 횟수
+	q.push({ a,b });
+	dp[a][b] = 1;
+	int x, y, next_x, next_y, cnt;
 	while (!q.empty()) {
-		x = q.front().first.first;
-		y = q.front().first.second;
-		cnt =  q.front().second;
-		max_cnt = max(cnt, max_cnt);
+		x = q.front().first;
+		y = q.front().second;
+		cnt = dp[x][y];
+		max_cnt = max(max_cnt, cnt);
 		q.pop();
 		for (int i = 0; i < 4; i++)
 		{
 			next_x = x + dx[i];
 			next_y = y + dy[i];
-			if (next_x >= 0 && next_x < n && next_y >= 0 && next_y < n &&!visit[next_x][next_y]) {				
-				if (forest[next_x][next_y] > forest[x][y]) {
-					if (dp[next_x][next_y] != 0)
-						max_cnt =max(max_cnt, dp[next_x][next_y] + 1);
-					else {
-						visit[next_x][next_y] = true;
-						q.push({ {next_x,next_y},cnt + 1 });
-					}
+			if (next_x < 0 || next_x >= n || next_y < 0 || next_y >= n)
+				continue;
+			if (forest[next_x][next_y] > forest[x][y]) {
+
+				if (dp[next_x][next_y] == 0 || dp[next_x][next_y] <= cnt + 1) {
+					dp[next_x][next_y] = cnt + 1;
+					q.push({ next_x,next_y });
 				}
 			}
 		}
-
 	}
-
-
-
 	return max_cnt;
 }
 
@@ -66,8 +60,9 @@ int main() {
 	{
 		for (int j = 0; j < n; j++)
 		{
-			dp[i][j]=count(i, j);
-			answer = max(answer, dp[i][j]);
+			if (dp[i][j] == 0) {
+				answer = max(answer, count(i, j));
+			}
 		}
 	}
 	cout << answer;
