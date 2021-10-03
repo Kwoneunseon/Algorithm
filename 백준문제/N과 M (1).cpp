@@ -1,11 +1,11 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <vector>
 
 using namespace std;
 int n, m;
 
 void repeat(vector<int> v, int arr[]) {
-	if (v.size() == m) {
+	if (v.size() == m) { //ê¸¸ì´ê°€ Mì¼ ê²½ìš°
 		for (int i = 0; i < m; i++)
 		{
 			cout << v[i] <<" ";
@@ -15,23 +15,24 @@ void repeat(vector<int> v, int arr[]) {
 	}
 	for (int i = 1; i <= n; i++)
 	{
-		if (arr[i] != 1) {
+		if (arr[i] != 1) { //ì›ì†Œ ì‚¬ìš© ì—¬ë¶€ í™•ì¸
 			v.push_back(i);
-			arr[i] = 1;
+			arr[i] = 1;//ì‚¬ìš©í–ˆìŒì„ ì²´í¬
 			repeat(v, arr);
-			arr[i] = 0;
-			//ÀÔ·ÂµÈ ¿ø¼Ò »èÁ¦
-			v.erase(v.begin() + v.size() - 1, v.begin() + v.size());
+			arr[i] = 0;//ì‚¬ìš©í–ˆìŒ í•´ì œ
+			v.pop_back();
 		}
 	}
 
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
 	cin >> n >> m;
 	vector<int> answer;
 	int *arr = new int[n+1];
-	arr[0] = 1;//»ç¿ëÇÏÁö ¾ÊÀ» °ÍÀÌ±â¿¡ ¹Ì¸® Ã¼Å©ÇØ³õÀ½.
+	arr[0] = 1;//ì‚¬ìš©í•˜ì§€ ì•Šì„ ê²ƒì´ê¸°ì— ë¯¸ë¦¬ ì²´í¬í•´ë†“ìŒ.
 	repeat(answer,arr);
 
 
