@@ -21,6 +21,7 @@ void Union(int n1, int n2) {
 		else {
 			roots[n1] = n2;
 			sizes[n2] = sizes[n1] + sizes[n2];
+
 		}
 	}
 }
@@ -66,8 +67,21 @@ int main() {
 		cin >> a >> b;
 		Union(a, b);
 	}
-	int CTP, H, H_root, K;
+	int CTP, H, H_root,c_root, K;
 	cin >> CTP >> H >> K;
+	c_root = find(CTP);
+	H_root = find(H);
+	while (K--) {
+		int maxSize=0, max_idx;
+		for (int i = 1; i <=N; i++)
+		{
+			int root_i = find(i);
+			if (root_i == c_root || root_i == H_root)
+				continue;
+			maxSize = max(maxSize, sizes[i]);
+		}
+
+	}
 	
 	
 
