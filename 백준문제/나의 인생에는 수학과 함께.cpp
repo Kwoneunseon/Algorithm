@@ -4,7 +4,6 @@
 using namespace std;
 
 char map[6][6] = { 0, };
-bool visit[6][6] = { false, };
 
 int dx[] = { 1,0 };
 int dy[] = { 0,1};
@@ -32,10 +31,7 @@ vector<int> bfs(int start_x, int start_y) {
 		q.pop();
 		x = first.x;
 		y = first.y;
-		if(x==3&& y==4){
 		
-		}
-			
 		bool number = first.number;
  		sum = first.sum;
 		op = first.op;
@@ -48,7 +44,7 @@ vector<int> bfs(int start_x, int start_y) {
 			new_x = x + dx[i];
 			new_y = y + dy[i];
 
-			if (new_x >= 0 && new_y >= 0 && new_x < N && new_y < N && !visit[new_x][new_y]) {
+			if (new_x >= 0 && new_y >= 0 && new_x < N && new_y < N ) {
 				if (!number) {
 					if (map[new_x][new_y] >= '0' && map[new_x][new_y] <= '5') {
 						if (op == '+')
