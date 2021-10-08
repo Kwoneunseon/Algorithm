@@ -1,33 +1,46 @@
+#include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-void star(int i, int j, int n) {
-	//박스 중앙 있는 위치는 무조건 비워준다.
-	if ((i / n) % 3 == 1 && (j / n) % 3 == 1)
-		cout << " ";
-	else {
-		if ( n / 3 == 0)
-			cout << "*";
-		else {
-			//중앙근처 확인하기 위해서
-			star(i, j, n / 3);
+char mat[2201][2201];
+
+int solve(int y, int x, int num) {
+	if (num == 1) {
+		mat[x][y] = '*';
+		return;
+	}
+
+	int div = num / 3;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (i == 1 && j == 1)
+				;
+			else
+				solve(y + (i*div), x + (j*div), div);
 		}
 	}
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
 	int n;
 	cin >> n;
+
+	memset(mat, ' ', sizeof(mat));
+
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			star(i, j, n);
+			cout << mat[i][j];
 		}
 		cout << "\n";
 	}
-
 
 	return 0;
 }
