@@ -14,12 +14,12 @@ int dist[MAX];
 
 void dijkstra(int start) {
 	priority_queue<pair<int, int> > pq;
-	pq.push(make_pair(,0));//(현재 노드, cost)
+	pq.push(make_pair(0,start));//(cost, 현재노드)
 	dist[start] = 0;
 	while (!pq.empty()) {
-		int current = pq.top().first;
+		int cost = -pq.top().first;
 		//cost에 -해주는 이유 : 짧은 cost를 먼저 처리하기 위해서
-		int cost = -pq.top().second;
+		int current = pq.top().second;
 		pq.pop();
 
 		for (int i = 0; i < node[current].size(); i++)
@@ -30,7 +30,7 @@ void dijkstra(int start) {
 			//다음 노드를 사용해서 가는 거리가 지금까지 간 거리보다 짧은 경우.
 			if (dist[next] > next_cost) {
 				dist[next] = next_cost;
-				pq.push(make_pair(next, -next_cost));
+				pq.push(make_pair(-next_cost, next));
 			}
 		}
 
