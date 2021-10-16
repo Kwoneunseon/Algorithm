@@ -31,6 +31,7 @@ int main() {
 	int n;
 	cin >> n;
 
+	solve(0, 0, n);
 	memset(mat, ' ', sizeof(mat));
 
 	for (int i = 0; i < n; i++)
