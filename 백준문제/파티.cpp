@@ -1,58 +1,68 @@
-#include <iostream>
-#include <vector>
-#include <queue>	
+﻿#include <iostream>
+#include <queue>
 #include <algorithm>
-
+#include <vector>
 #define INF 987654321
+#define MAX 1001 //학생수는 1000이 최대이다.
+
 
 using namespace std;
-int n, m, x;
-vector<pair<int,int>> map[1001];
 
-int dijkstra(int start) {
-	int *cost = new int[n + 1];
-	fill(cost, cost + n + 1, INF);
-	cost[start] = 0;
+vector<pair<int, int>> map[MAX];//학생과 학생 사이의 가중치 입력한 벡터
+vector<vector<int>> cost;//i학생기준, 모든 정점에 대해 최단 경로 가중치 입력. 
 
+int N, M;
+
+void dijkstra(int start) {
 	priority_queue<pair<int, int>>pq;
-	pq.push({ 0, start });
+	pq.push({ 0,start });
+	cost[start][start] = 0;
 	while (!pq.empty()) {
-		int n_cost = -pq.top().first;
-		int current = pq.top().second;	
+		int current_cost = -pq.top().first;
+		int current = pq.top().second;
 		pq.pop();
 
-		if(cost[current] < n_cost) continue;
+		if (cost[start][current] < current_cost) continue;
 		for (int i = 0; i < map[current].size(); i++)
 		{
+			int next_cost = current_cost + map[current][i].second;
 			int next = map[current][i].first;
-			int next_cost = n_cost + map[current][i].second;
-			if (cost[next] > next_cost) {
-				cost[next] = next_cost;
-				pq.push({ -next_cost, next });
+
+			if (cost[start][next] > next_cost) {
+				cost[start][next] = next_cost;
+				pq.push({ -next_cost,next });
 			}
 		}
 	}
-	return cost[x];
 }
 
+
 int main() {
-	cin.tie(NULL);
 	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int X;//파티 장소
+	cin >> N >> M >> X;
+	//cost를 모든 값이 INF인 (N+1)x(N+1)행렬로 초기화
+	cost.resize(N + 1, vector<int>(N+1,INF));
 
-	cin >> n >> m >> x;
-
-	int start, def, weight;
-
-	for (int i = 0; i < m; i++)
+	int first, last, weight;
+	for (int i = 0; i < M; i++)
 	{
-		cin >> start >> def >> weight;
-		map[start].push_back({ def,weight });
+		cin >> first >> last >> weight;
+		map[first].push_back({ last,weight });
+	}
+
+	for (int i = 1; i <= N; i++)
+	{
+		dijkstra(i);
 	}
 	int answer = 0;
-	for (int i = 1; i <= n; i++)
+	for (int i = 1; i <= N; i++)
 	{
-		answer = max(answer, dijkstra(i));
+		answer = max(answer, cost[X][i] + cost[i][X]);
 	}
+
 	cout << answer;
+	
 	return 0;
 }
