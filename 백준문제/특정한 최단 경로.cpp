@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <algorithm>
 #include <vector>
 #include <queue>
@@ -54,16 +54,17 @@ int main() {
 	{
 		dijkstra(i);
 	}
+	//v1-v2 사이의 거리를 구한다.
 	long long answer = cost[v1][v2];
 	if (answer == INF) {
-
+		//v1-v2가 연결되어 있지 않을 경우
 	}
-	else if (v1 == 1)
+	else if (v1 == 1)//v1이 1인 경우 v2-n의 최단경로만 구해준다.
 		answer += cost[v2][N];
-	else if (v2 == N) {
+	else if (v2 == N) {//v2가 n인 경우, 1-v1의 최단경로만 구해준다.
 		answer += cost[1][v1];
 	}
-	else
+	else //1-v1-v2-n VS 1-v2-v1-n 중 더 가까운 최단경로를 구한다.
 		answer += min(cost[1][v1] + cost[v2][N], cost[1][v2] + cost[v1][N]);
 	
 	if (answer >= INF)
