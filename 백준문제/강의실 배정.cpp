@@ -10,7 +10,7 @@ int main() {
 	int n;
 	int start, end;
 	vector<pair<int, int>> classes;
-	queue<pair<int, int>> pq; 
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 	cin >> n;
 	for (int i = 0; i < n; i++)
 	{
@@ -21,7 +21,7 @@ int main() {
 	pq.push(classes[0]);
 	for (int i = 1; i < n; i++)
 	{
-		if (pq.front().second <= classes[i].first) {
+		if (pq.top().second <= classes[i].first) {
 			pq.pop();
 		}
 		pq.push(classes[i]);
