@@ -6,13 +6,14 @@
 using namespace std;
 
 int main() {
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
 	while (true) {
 		string s;
 		bool answer = true;
 		getline(cin, s);
 		if (s == ".")
 			break;
-		cout << s<<"\n";
 		stack<char>st;
 		for (int i = 0; i < s.length(); i++)
 		{
@@ -28,7 +29,7 @@ int main() {
 					st.pop();
 			}
 			else if (s[i] == ']') {
-				if (st.empty() || st.top() != ']') {
+				if (st.empty() || st.top() != '[') {
 					answer = false;
 					break;
 				}
