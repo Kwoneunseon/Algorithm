@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ int main() {
 	{
 		cin >> money[i];
 	}
-	//��
+	//합이 0일때, 아무것도 선택하지 않는다 =1 
 	dp[0] = 1;
 	for (int i = 0; i < n; i++)
 	{
