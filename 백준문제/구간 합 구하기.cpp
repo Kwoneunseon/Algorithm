@@ -6,16 +6,18 @@ using namespace std;
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
-	int str_size, M, K;
+	int num_size, M, K;
 
-	cin >> str_size >> M >> K;
+	cin >> num_size >> M >> K;
 
 	vector<int> number;
-	long long *sum_dp = new long long[str_size+2];
-	fill(sum_dp, sum_dp + str_size + 2, 0);
+	long long *sum_dp = new long long[num_size+2];
+	int *dif = new int[num_size + 2];
+	fill(dif, dif + num_size + 2, 0);
+	fill(sum_dp, sum_dp + num_size + 2, 0);
 
 	number.push_back(0);
-	for (int i = 1; i <= str_size; i++)
+	for (int i = 1; i <= num_size; i++)
 	{
 		int temp;
 		cin >> temp;
@@ -32,16 +34,17 @@ int main() {
 		cin >> cmd >> first >> second;
 		//first번째 수를 second로 바꾼다
 		if (cmd == 1) {
-			for (int j = first; j <= str_size; j++)
-			{
-				sum_dp[j] = sum_dp[j] - number[first] + second;
-			}
-
-			number[first] = second;
+			dif[first] = second;
 		}
 		//first-second번째수까지의 합 구하기
 		else if (cmd == 2) {
 			long long answer = sum_dp[second] - sum_dp[first-1];
+			for (int j = first; j <= second; j++)
+			{
+				if (dif[j] != 0) {
+					answer += dif[j] - number[j];
+				}
+			}
 			cout << answer << "\n";
 
 		}
